@@ -2,38 +2,133 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Just One Question 💖</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
 body{
-    margin:0;
-    height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    background:linear-gradient(135deg,#ffdde1,#ee9ca7);
-    font-family:'Poppins',sans-serif;
-    overflow:hidden;
+  margin:0;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:linear-gradient(135deg,#ffdde1,#ee9ca7);
+  font-family:Arial, sans-serif;
+  overflow:hidden;
 }
 
 .card{
-    background:white;
-    padding:30px;
-    border-radius:25px;
-    text-align:center;
-    box-shadow:0 20px 40px rgba(0,0,0,0.2);
-    z-index:2;
+  background:#fff;
+  padding:30px;
+  border-radius:20px;
+  text-align:center;
+  box-shadow:0 15px 30px rgba(0,0,0,0.2);
 }
 
-h1{ color:#e91e63; }
-
 button{
-    padding:12px 28px;
-    font-size:16px;
-    border:none;
-    border-radius:30px;
-    cursor:pointer;
+  padding:12px 26px;
+  font-size:16px;
+  border:none;
+  border-radius:25px;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+#yes{
+  background:#e91e63;
+  color:#fff;
+}
+
+#no{
+  background:#ddd;
+  position:absolute;
+}
+.fall{
+  position:fixed;
+  top:-20px;
+  animation:fall linear forwards;
+}
+@keyframes fall{
+  to{
+    transform:translateY(110vh) rotate(360deg);
+    opacity:0;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+  <h2>Will you be my Valentine? 💕</h2>
+  <button id="yes">Yes 😍</button>
+  <button id="no">No 🙈</button>
+</div>
+
+<audio id="music" loop>
+  <source src="https://cdn.pixabay.com/audio/2022/10/25/audio_0c8f2c6e5c.mp3">
+</audio>
+
+<script>
+const noBtn = document.getElementById("no");
+const yesBtn = document.getElementById("yes");
+
+let scale = 1;
+let index = 0;
+
+const noTexts = [
+  "No 🙈",
+  "Are you sure? 😳",
+  "Think again 😏",
+  "Really? 🥺",
+  "Don’t do this 😭",
+  "Last chance 😬",
+  "My heart 💔",
+  "Stop running 😅",
+  "Just click YES 😍",
+  "Okay I give up 😭"
+];
+
+// THIS EVENT IS THE KEY 🔑
+noBtn.addEventListener("mouseenter", () => {
+
+  // change text EVERY time
+  noBtn.innerText = noTexts[index % noTexts.length];
+  index++;
+
+  // move button
+  const x = Math.random() * (window.innerWidth - 120);
+  const y = Math.random() * (window.innerHeight - 60);
+  noBtn.style.left = x + "px";
+  noBtn.style.top  = y + "px";
+
+  // grow YES
+  scale += 0.15;
+  yesBtn.style.transform = `scale(${scale})`;
+});
+
+yesBtn.addEventListener("click", () => {
+  document.getElementById("music").play();
+  rain();
+  alert("Yaaay 💖 You said YES 🥰");
+});
+
+function rain(){
+  for(let i=0;i<40;i++){
+    const el=document.createElement("div");
+    el.className="fall";
+    el.innerHTML=Math.random()>0.5?"❤️":"🌹";
+    el.style.left=Math.random()*100+"vw";
+    el.style.fontSize=(15+Math.random()*20)+"px";
+    el.style.animationDuration=(3+Math.random()*3)+"s";
+    document.body.appendChild(el);
+    setTimeout(()=>el.remove(),6000);
+  }
+}
+</script>
+
+</body>
+</html>
     margin:10px;
     transition:all 0.3s ease;
 }
