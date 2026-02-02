@@ -115,18 +115,25 @@ button{
   <button id="noBtn">No 🙈</button>
 </div>
 
-<!-- Popups -->
+<!-- FIRST POPUP -->
 <div class="popup" id="popup1">
   <h3>🎉 Yayyy! 🥰❤️</h3>
   <p>You made my heart smile 💖</p>
 </div>
 
+<!-- SECOND POPUP -->
 <div class="popup" id="popup2">
   <h3>I knew it 😍</h3>
   <p>This just made my whole day 🌹❤️</p>
+
+  <div id="dateSection" style="display:none;margin-top:15px">
+    <input type="date" id="datePick">
+    <br><br>
+    <button onclick="confirmDate()">Confirm Date 💖</button>
+  </div>
 </div>
 
-<!-- Black screen & fireworks -->
+<!-- Effects -->
 <div id="blackScreen"></div>
 <canvas id="fireworks"></canvas>
 
@@ -218,34 +225,55 @@ function rain(){
 yesBtn.onclick = () => {
   const black = document.getElementById("blackScreen");
 
-  // 1️⃣ Black screen
+  // Black screen
   black.classList.add("show");
 
-  // 2️⃣ Fireworks start
+  // Fireworks
   setTimeout(()=>{
     canvas.style.display="block";
     fireInterval=setInterval(createFirework,400);
     animateFireworks();
   },500);
 
-  // 3️⃣ Stop fireworks & remove black
+  // Stop fireworks
   setTimeout(()=>{
     clearInterval(fireInterval);
     canvas.style.display="none";
     black.classList.remove("show");
   },3000);
 
-  // 4️⃣ First popup + rain
+  // First popup + rain
   setTimeout(()=>{
     document.getElementById("popup1").classList.add("show");
     rain();
   },3500);
 
-  // 5️⃣ Second popup after 8–9 sec
+  // Second popup after 8–9 sec
   setTimeout(()=>{
-    document.getElementById("popup2").classList.add("show");
+    const p2 = document.getElementById("popup2");
+    p2.classList.add("show");
+
+    // Show date option after 2–3 sec
+    setTimeout(()=>{
+      document.getElementById("dateSection").style.display="block";
+    },2500);
+
   },12000);
 };
+
+/* WhatsApp confirmation */
+function confirmDate(){
+  const date = document.getElementById("datePick").value;
+  if(!date){
+    alert("Please select a date 😊");
+    return;
+  }
+
+  const phone = "8802329692";
+  const msg = `Date confirmed 🥰❤️%0AOur date is on: ${date} 🌹`;
+
+  window.open(`https://wa.me/91${phone}?text=${msg}`,"_blank");
+}
 </script>
 
 </body>
